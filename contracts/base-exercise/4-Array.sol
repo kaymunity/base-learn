@@ -21,18 +21,29 @@ contract ArraysExercise {
             numbers.push(_toappend[i]);
         }
     } 
+
     function saveTimestamp(uint _unixTimestamp) external{
         senders.push(msg.sender);
         timestamps.push(_unixTimestamp);
     }
-    function afterY2K() external view returns(uint[] memory , address[] memory){
-        uint[] memory unixTimestamp;
-        address[] memory sender;
+    function afterY2K() public view returns(uint[] memory , address[] memory){
+        uint greaterY2K;
+        for (uint a = 0; a < timestamps.length; a++){
+            if (timestamps[a] > 946702800){
+                greaterY2K++;
+            }
+        }
+
+        uint[] memory unixTimestamp = new uint[](greaterY2K);
+        address[] memory sender = new address[](greaterY2K);
         uint count;
 
-        for (uint i = 0; i < timestamps.length; i++){
+        for (uint i = 0; i < greaterY2K; i++){
             if (timestamps[i] > 946702800){
+// ///////////////////////////////////////////////////////
                 unixTimestamp[count] = timestamps[i];
+                sender[count] = senders[i];
+//////////////////////////////////////////////////////////
                 count++;
             }
         }
