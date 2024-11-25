@@ -26,6 +26,7 @@ contract ArraysExercise {
         senders.push(msg.sender);
         timestamps.push(_unixTimestamp);
     }
+    
     function afterY2K() public view returns(uint[] memory , address[] memory){
         uint greaterY2K;
         for (uint a = 0; a < timestamps.length; a++){
@@ -38,7 +39,7 @@ contract ArraysExercise {
         address[] memory sender = new address[](greaterY2K);
         uint count;
 
-        for (uint i = 0; i < greaterY2K; i++){
+        for (uint i = 0; i < timestamps.length; i++){
             if (timestamps[i] > 946702800){
 // ///////////////////////////////////////////////////////
                 unixTimestamp[count] = timestamps[i];
