@@ -16,15 +16,17 @@ contract Mappings{
     address[]  favAddress;
 
     function saveFavoriteNumber(uint _favorite) public {
-        favoriteNumbers[msg.sender] = _favorite;
+        if (favoriteNumbers[msg.sender] == 0){
         favAddress.push(msg.sender);
+
+        }
+        favoriteNumbers[msg.sender] = _favorite;
     }
 
     function returnAllFavs() public view  returns(uint[] memory){
         uint[] memory favNum = new uint[](favAddress.length);
 
         for (uint i = 0; i < favAddress.length; i++){
-            // if (favoriteNumbers[favAddress[i]] == )
             favNum[i] = favoriteNumbers[favAddress[i]];
         }
         return favNum;
