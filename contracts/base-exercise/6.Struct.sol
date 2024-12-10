@@ -20,14 +20,14 @@ contract GarageManager{
         string memory _color,
         uint8 _numberOfDoors) external  {
 
-            Car storage newCar = garageCars.push();
-            
-            newCar.make = _make;
-            newCar.model = _model;
-            newCar.color = _color;
-            newCar.numberOfDoors = _numberOfDoors;
+        Car storage newCar = garageCars.push();
+        
+        newCar.make = _make;
+        newCar.model = _model;
+        newCar.color = _color;
+        newCar.numberOfDoors = _numberOfDoors;
 
-            garage[msg.sender] = garageCars;
+        garage[msg.sender] = garageCars;
     }
 
     function getMyCars() external view returns( Car[] memory){
