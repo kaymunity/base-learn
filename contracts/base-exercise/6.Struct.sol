@@ -5,29 +5,29 @@ pragma solidity 0.8.28;
 contract GarageManager{
 
     struct Car {
-        uint8 numberOfDoors;
         string make;
         string model;
         string color;
+        uint numberOfDoors;
     }
+
     mapping(address => Car[]) public garage;
 
-    Car[] garageCars;
     
     function addCar(
         string memory _make,
         string memory _model,
         string memory _color,
-        uint8 _numberOfDoors) external  {
+        uint _numberOfDoors) external  {
 
-        Car storage newCar = garageCars.push();
-        
-        newCar.make = _make;
-        newCar.model = _model;
-        newCar.color = _color;
-        newCar.numberOfDoors = _numberOfDoors;
+        Car memory newCar = Car({
+            make: _make,
+            model: _model,
+            color: _color,
+            numberOfDoors: _numberOfDoors
+        });
 
-        garage[msg.sender] = garageCars;
+        garage[msg.sender].push(newCar);
     }
 
     function getMyCars() external view returns( Car[] memory){
@@ -45,30 +45,37 @@ contract GarageManager{
         string memory _updateMake,
         string memory _updateModel,
         string memory _updateColor, 
-        uint8 _updateNumberOfDoors) external {
+        uint _updateNumberOfDoors) external {
 
         if (_index >= garage[msg.sender].length){
             revert BadCarIndex(_index);
         }
 
-        Car storage updatedCar = garage[msg.sender][_index];
+        garage[msg.sender][_index] = Car({
+        make: _updateMake,
+        model: _updateModel,
+        color: _updateColor,
+        numberOfDoors: _updateNumberOfDoors
+        });
 
-        if (bytes(_updateMake).length != 0){
-            updatedCar.make = _updateMake;
-        }
-        if (bytes(_updateModel).length != 0){
-            updatedCar.model = _updateModel;
-        }
-        if (bytes(_updateColor).length != 0){
-            updatedCar.color = _updateColor;
-        }
-        if (_updateNumberOfDoors != 0){
-            updatedCar.numberOfDoors = _updateNumberOfDoors;
-        }
+        // Car storage updatedCar = garage[msg.sender][_index];
+
+        // if (bytes(_updateMake).length != 0){
+        //     updatedCar.make = _updateMake;
+        // }
+        // if (bytes(_updateModel).length != 0){
+        //     updatedCar.model = _updateModel;
+        // }
+        // if (bytes(_updateColor).length != 0){
+        //     updatedCar.color = _updateColor;
+        // }
+        // if (_updateNumberOfDoors != 0){
+        //     updatedCar.numberOfDoors = _updateNumberOfDoors;
+        // }
 
     }
     
-    function resetMyGarage()public {
+    function resetMyGarage() public {
         delete garage[msg.sender];
     }
 }
