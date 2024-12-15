@@ -2,6 +2,10 @@
 
 pragma solidity 0.8.28;
 
+abstract contract ContractD{
+    function whoAreYou() public virtual pure returns(string memory);
+}
+
 contract ContractC{
     function whoAmI() public virtual view returns(string memory){
         return "ContractC";
@@ -18,7 +22,7 @@ contract ContractB{
 }
 }
 
-contract ContractA is ContractB, ContractC{
+contract ContractA is ContractB, ContractC, ContractD{
     enum Type {
         None,
         ContractBType,
@@ -44,6 +48,10 @@ contract ContractA is ContractB, ContractC{
 
     function switchCurrentType(Type _switchType) public{
         contractType = _switchType;
+    }
+
+    function whoAreYou() public override(ContractD) pure returns(string memory){
+        return "Contract D";
     }
     
 
