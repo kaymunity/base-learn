@@ -2,38 +2,65 @@
 
 pragma solidity 0.8.28;
 
-
-// contract SimpleContractB{
-//     function whoAmI() public pure returns(string memory){
-//     return "SimpleContractB";
-//     }
-
-//     function whoAmIInternal() internal pure returns(string memory){
-//     return "SimpleContractB";
-// }
-// }
-
-// contract SimpleContractA is SimpleContractB{
-//     function whoAmIEnternal() external pure returns(string memory){
-//         return whoAmIInternal();
-//     }
-// }
-
-// contract C is SimpleContractB, SimpleContractA{
-
-// }
-
-contract C{
-
+contract ContractC{
+    function whoAmI() public virtual view returns(string memory){
+        return "ContractC";
+    }
 }
 
-contract B is C{
+contract ContractB{
+    function whoAmI() public virtual view returns(string memory){
+    return "ContractB";
+    }
 
+    function whoAmIInternal() internal pure returns(string memory){
+    return "ContractB";
+}
 }
 
-contract A is C,B{
+contract ContractA is ContractB, ContractC{
+    enum Type {
+        None,
+        ContractBType,
+        ContractCType
+    }
 
+    Type contractType;
+
+    constructor(Type _initialType){
+        contractType = _initialType;
+    }
+
+    function whoAmI() public override(ContractB, ContractC) view returns(string memory){
+        if (contractType == Type.ContractBType) {
+            return ContractB.whoAmI();
+        }
+
+        if (contractType == Type.ContractCType) {
+            return ContractC.whoAmI();
+        }
+        return "contract A";
+    }
+
+    function switchCurrentType(Type _switchType) public{
+        contractType = _switchType;
+    }
+    
+
+    function whoAmIEnternal() external  pure returns(string memory){
+        return whoAmIInternal();
+    }
 }
+
+
+
+// contract B is C{
+
+// }
+
+// contract A is C,B{
+
+// }
 
 
 
