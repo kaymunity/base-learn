@@ -1,8 +1,29 @@
 // SPDX-License-Identifier: NONE
 
+// File: https://github.com/kaymunity/base-learn/blob/main/contracts/SillyStringUtils.sol
+
+
+
+pragma solidity ^0.8.17;
+
+library SillyStringUtils {
+
+    struct Haiku {
+        string line1;
+        string line2;
+        string line3;
+    }
+
+    function shruggie(string memory _input) internal pure returns (string memory) {
+        return string.concat(_input, unicode" 🤷");
+    }
+}
+// File: contracts/base-exercise/8.Imports.sol
+
+
+
 pragma solidity 0.8.28;
 
-import "https://github.com/kaymunity/base-learn/blob/main/contracts/SillyStringUtils.sol";
 
 contract ImportExercise{
     using SillyStringUtils for SillyStringUtils.Haiku;
@@ -27,4 +48,5 @@ contract ImportExercise{
         return _haiku;
     }
     
+    // 0xd9F57B78f0D4bE6D770377c0b3d571bfD52b6fB0
 }
