@@ -25,6 +25,5 @@ contract ImportExercise{
         _haiku.line3 = SillyStringUtils.shruggie(_haiku.line3);
         
         return _haiku;
-    }
-    
+    } 
 }
