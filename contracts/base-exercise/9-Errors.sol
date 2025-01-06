@@ -8,16 +8,34 @@ contract ErrorTriageExercise {
      * and returns a uint array with the absolute integer difference of each pairing.
      */
     function diffWithNeighbor(
-        int _a,
-        int _b,
-        int _c,
-        int _d
+        uint _a,
+        uint _b,
+        uint _c,
+        uint _d
     ) public pure returns (uint[] memory) {
         uint[] memory results = new uint[](3);
+        
+        if (_a > _b){
+            results[0] = uint(_a - _b);
+        }
+        else {
+            results[0] = uint(_b - _a);
+        }
 
-        results[0] = uint( _a - _b);
-        results[1] = uint(_b - _c);
-        results[2] = uint(_c - _d);
+        if (_b > _c){
+            results[1] = uint(_b - _c);
+        }
+        else {
+            results[1] = uint(_c - _b);
+        }
+
+        if (_c > _d){
+            results[2] = uint(_c - _d);
+        }
+        else {
+            results[2] = uint(_d - _c);
+        }
+        
 
         return results;
     }
@@ -30,7 +48,7 @@ contract ErrorTriageExercise {
         uint _base,
         int _modifier
     ) public pure returns (uint) {
-        return _base +uint(_modifier);
+        return uint(int(_base) + _modifier);
     }
 
     /**
@@ -39,10 +57,12 @@ contract ErrorTriageExercise {
      */
     uint[] arr;
 
-    function popWithReturn() public returns (uint) {
+    function popWithReturn() public returns (uint) {        
         uint index = arr.length - 1;
-        delete arr[index];
-        return arr[index];
+        uint num = arr[index];
+
+        arr.pop();
+        return num;
     }
 
     // The utility functions below are working as expected
